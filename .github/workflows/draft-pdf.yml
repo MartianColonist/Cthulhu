@@ -5,6 +5,7 @@ on:
     branches:    
       - 'joss'
       - 'main'
+      - 'dev'
 
 jobs:
   paper:
