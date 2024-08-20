@@ -12,22 +12,22 @@ Part 1: A Beginner's Guide to Cross Sections
 Cross sections are used extensively, especially in atmospheric, climate science, 
 and planetary astronomy. A cross section encodes the universal physics of how 
 light interacts with the various gases present in an atmosphere, whether it be 
-for the Earth, Mars, and exoplanet, or a brown dwarf.
+for the Earth, Mars, an exoplanet, or a brown dwarf.
 
 A cross section can be considered as the wavelength-dependent `effective area` 
 a chemical species (a molecule, atom, or ion) presents to a beam of light 
 (with units conventionally expressed in :math:`\mathrm{cm}^2`). Equivalently, a 
 cross section can be considered an expression of the probability of a photon to 
-interact with a given chemical species as a function of wavelength. The temperature
+interact with a given chemical species as a function of wavelength. The term
 `opacity` is often used interchangeably with cross section.
 
 An absorption cross section is the sum of the absorption profiles of many 
 individual quantum mechanical transitions (called a `line`). Transitions can be
-electronic (e.g. for atoms), rotation-vibration transitions (most molecular 
+electronic (e.g. for atoms), rotational-vibrational (most molecular 
 transitions), or some combination thereof. Each transition has an intrinsic
 strength (`intensity`) and a shape (`profile`), where the intensity is influenced 
 by temperature and quantum state properties and the shape is influenced by both 
-temperature and pressure (`broadening`). Line profiles are usually modelled as 
+temperature and pressure (`broadening`). Line profiles are usually modeled as 
 Voigt profiles (a convolution of a Lorentzian and Gaussian function) for exoplanet
 or brown dwarf applications (though more accurate line shapes are sometimes used 
 for remote sensing applications in the Solar System).
@@ -47,7 +47,7 @@ Below is an illustrative plot of several cross sections as a function of wavelen
 (at 2000 K and 1 bar) from `MacDonald & Lewis (2022) 
 <https://ui.adsabs.harvard.edu/abs/2021arXiv211105862M/abstract>`_. We see that 
 the Na cross section, which is the only atom plotted, has a prominent line 
-centred at visible wavelengths near 0.6 μm with broad wings (a resonance doublet),
+cantered at visible wavelengths near 0.6 μm with broad wings (a resonance doublet),
 which corresponds to the electronic transition between the ground and first 
 excited state. :math:`\mathrm{CH_4}` instead has a series of bands in the
 near-infrared formed by a vast sea of ro-vibrational transitions. Indeed, molecules
@@ -86,7 +86,7 @@ Functionality
 
 * Automatic downloading and formatting of line lists from an online databases.
 * Support for ExoMol, HITRAN, HITEMP, and VALD line lists.
-* Package grids of cross sections as a function of temperature and pressure into a HDF5 database to integrate with your favourite radiative transfer code.
+* Package grids of cross sections as a function of temperature and pressure into a HDF5 database to integrate with your favorite radiative transfer code.
 
 User-Friendly
 """""""""""""
