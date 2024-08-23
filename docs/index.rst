@@ -1,21 +1,30 @@
-Cthulhu's documentation.
+Cthulhu's documentation
 =============================================
 
-Welcome to Cthulhu! 
+Welcome to Cthulhu's lair!
 
 Cthulhu is a Python package that allows users to effortlessly create molecular
-and atomic cross sections to aid in their own research, including for the creation of
-accurate atmospheric retrieval models. 
+and atomic absorption cross sections from online line list databases for 
+exoplanet or brown dwarf radiative transfer application.
+
+Cross sections encode the interaction strength between light and gases in an 
+atmosphere, making their accurate computation a core requirement for 
+calculating spectra of substellar atmospheres.
 
 Cthulhu's features currently include:
 
-* Capability to download line lists from online databases, including ExoMol, HITRAN, HITEMP, and VALD
-* Cross section computations performed at high speeds (≈ 10,000 transition per second)
-* Plotting scripts to create beautiful, organized graphs to include in research papers and presentations
-* Completely written in Python, making it easy for researchers to use and adapt the code
-* Designed to be used from a personal laptop, no supercomputers needed
+* Fully Python, lowering the barrier to learn how cross sections are made.
+* Automatically download line lists from online databases, including ExoMol, HITRAN, HITEMP, and VALD.
+* Calculate cross sections at high speeds (≈ 100,000 transition per second).
+* Generate HDF5 opacity files to plug into your favourite radiative transfer code.
+* Produce visually-appealing plots out of the box. 
+* Runs on your laptop (for smaller line lists) or on a supercomputer.
 
-If this is your first time using Cthulhu, please proceed to the Introduction page on the sidebar.
+If this is your first time working with cross sections, please check out the
+`Introduction <https://cthulhu.readthedocs.io/en/latest/content/introduction.html>`_.
+If you are familiar with cross sections already and want to explore Cthulhu'scaling
+capabilities, the best place to begin in the `Quick Start Guide 
+<https://cthulhu.readthedocs.io/en/latest/content/notebooks/quick_start.html>`_.
 
 Cthulhu is available under the BSD 3-Clause License. If you use Cthulhu in your own work, 
 please cite Agrawal & MacDonald (2024).
