@@ -5,7 +5,7 @@ with open("README.rst", "r") as fh:
 
 setuptools.setup(
     name="Cthulhu", # Replace with your own username
-    version="0.9.5",
+    version="1.0.0",
     author="Ryan MacDonald, Arnav Agrawal",
     author_email="ryanjmac@umich.edu, aa687@cornell.edu",
     description="A python package to calculate atomic and molecular cross sections for substellar atmospheres.",
