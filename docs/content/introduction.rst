@@ -56,7 +56,7 @@ to be considered for temperatures :math:`>` 1000 K. Finally, we see that heavy
 metal molecules like TiO have a complex system of bands that can extend to 
 visible wavelengths.
 
-.. image:: ./images/Example_Cross_Section.png
+.. image:: ../_static/Example_Cross_Section.png
   :width: 600
   :alt: Example cross sections for TiO, Na, and CH:subscript:`4`
 
