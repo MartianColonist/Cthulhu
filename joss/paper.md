@@ -1,5 +1,5 @@
 ---
-title: '`Cthulhu`: An Open Source Molecular and Atomic Cross Section Computation Code for Substellar Atmospheres'
+title: 'Cthulhu: An Open Source Molecular and Atomic Cross Section Computation Code for Substellar Atmospheres'
 tags:
   - Python
   - astronomy
