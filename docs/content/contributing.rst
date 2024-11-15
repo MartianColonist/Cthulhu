@@ -13,13 +13,6 @@ a new automated test). If you're planning to work on a major new feature, we'd
 encourage you to reach out to the lead developer to give a heads-up: 
 ryanjamc@umich.edu
 
-.. note::
-   We generally recommend using `VS Code <https://code.visualstudio.com/>`_ if
-   this is your first time contributing to an open source project.
-
-   VS Code provides a friendly interface to edit code, make git commits, send 
-   pull requests, and more, all without needing to use git terminal commands.
-
 Cthulhu uses the following development process (inspired by a graphic from 
 Natasha Batalha):
 

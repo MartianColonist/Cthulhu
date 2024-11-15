@@ -143,14 +143,14 @@ def plot_cross_section(collection, labels, filename, plot_dir = './plots/',
 
     # Set y range
     if (y_min == None):
-        y_min = 1.0e-50
+        y_min = 1.0e-30
     if (y_max == None):
-        y_max = sigma_max
+        y_max = sigma_max * 10
 
     with warnings.catch_warnings(): # Ignore the UserWarning with setting some axes limits for log plots
         warnings.simplefilter("ignore")
         ax.set_xlim([1e4/nu_max, 1e4/nu_min]) # Convert wavenumber (in cm^-1) to wavelength (in um)
-        ax.set_ylim([y_min, y_max * 10])
+        ax.set_ylim([y_min, y_max])
 
     ax.set_xlabel(r'Wavelength (μm)', fontsize = 14)
     ax.set_ylabel(r'Cross Section (cm$^2$)', fontsize = 14)
