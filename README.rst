@@ -24,7 +24,7 @@ can be found in the
 Attribution
 -----------
 
-If you use Cthulhu in your work, please cite Agrawal & MacDonald (submitted to JOSS). 
+If you use Cthulhu in your work, please cite `Agrawal & MacDonald <https://joss.theoj.org/papers/10.21105/joss.06894>`_. 
 
 License
 -------
