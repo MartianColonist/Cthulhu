@@ -185,11 +185,15 @@ def read_cross_section_file(species, database, filename, isotope = 'default',
     if database in ['hitran', 'hitemp']:
         molecule_dict = HITRAN.create_id_dict()
         mol_id = molecule_dict.get(species)
-        if isotope == 'default':
-            isotope = isotopologueName(mol_id, 1)
+        if (mol_id == None):
+            isotope = 1
+            isotope = HITRAN.replace_iso_name(species)
         else:
-            isotope = isotopologueName(mol_id, isotope)
-        isotope = HITRAN.replace_iso_name(isotope)
+            if isotope == 'default':
+                isotope = isotopologueName(mol_id, 1)
+            else:
+                isotope = isotopologueName(mol_id, isotope)
+            isotope = HITRAN.replace_iso_name(isotope)
 
     if database == 'exomol':
         species = re.sub('[+]', '_p', species)  # Handle ions
@@ -215,7 +219,10 @@ def read_cross_section_file(species, database, filename, isotope = 'default',
     if database == 'vald':
         tag = '(' + ion_roman + ')'
     else:
-        tag = isotope
+        if (species == 'C2H6S'):     # Special case for DMS
+            tag = '(12C2-1H6-32S)'
+        else:
+            tag = isotope
 
     if (database == 'exomol'):
         output_directory = (output_dir + species + '  ~  (' + tag + ')/' +
