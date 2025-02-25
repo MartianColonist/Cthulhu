@@ -25,6 +25,7 @@ setup(
                         'pandas',
                         'lxml',
                         'hitran-api',
-                        'pytest'],
+                        'pytest',
+                        'jupyter'],
     zip_safe = False,
 )
