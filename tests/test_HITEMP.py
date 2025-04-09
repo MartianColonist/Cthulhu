@@ -36,8 +36,8 @@ def test_create_pf():
     assert np.isnan(np.sum(Q)) == False
     
   
-def test_summon_HITEMP(): # tests that the air broadening file for N2 was created, because that means that the summon function was able to work without errors
-    HITEMP.summon_HITEMP(5, 1)  # Summon N2 from HITEMP
+def test_summon_HITEMP(): # tests that the air broadening file for CO was created, because that means that the summon function was able to work without errors
+    HITEMP.summon_HITEMP(5, 1)  # Summon CO from HITEMP
     air_broad = './input/CO  ~  (12C-16O)/HITEMP/air.broad'
     broadening_exists = os.path.exists(air_broad)  # True if path exists to air broadening file
     shutil.rmtree('./input')

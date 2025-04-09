@@ -182,7 +182,7 @@ def HITEMP_table():
 
     hitemp = hitemp[:-1] # Get rid of last row
     hitemp.rename(columns = {'Iso counta':'Iso Count'}, inplace = True) # Rename a column header
-    hitemp.loc[len(hitemp)] = ['4', 'N2O', 'Nitrous Oxide', '5', '3626425', '0', '12899', '2019', ''] # Manually add N2O molecule to table
+    hitemp.loc[len(hitemp)] = ['4', 'N2O', 'Nitrous Oxide', '5', '3626425', '0', '12899', '2019', '', ''] # Manually add N2O molecule to table
     hitemp.loc[:, 'ID'] = pd.to_numeric(hitemp['ID'])  # This line and the next convert all values in 'ID' and 'Iso Count' column to floats
     hitemp.loc[:, 'Iso Count'] = pd.to_numeric(hitemp['Iso Count'])
 
@@ -343,6 +343,7 @@ def check_HITEMP_file_exists(folder, file):
     String
         Return a String which is either 'par', 'hdf', or 'neither' depending on which file type of this exists, if at all.
     '''
+    print("FILE: ", file)
     matches = re.search('\_([^_]*)', file)  # Everything in between the first 2 underscores (inclusive of the first underscore)
     match = matches.group() # Retrieve the match from match object
     match = match[1:] # Get rid of the first underscore
