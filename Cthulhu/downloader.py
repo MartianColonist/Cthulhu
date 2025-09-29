@@ -9,7 +9,6 @@ from tqdm import tqdm
 import numpy as np
 import pandas as pd
 import h5py
-import hdf5plugin
 import time
 import shutil
 import zipfile
