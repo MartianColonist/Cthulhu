@@ -9,6 +9,7 @@ from tqdm import tqdm
 import numpy as np
 import pandas as pd
 import h5py
+import hdf5plugin
 import time
 import shutil
 import zipfile
@@ -371,11 +372,53 @@ def check_HITEMP_file_exists(folder, file):
         return 'hdf'
     else:
         return 'neither'
+    
+def process_hdf_chunk(chunk, upper_ds, lower_ds, logA_ds, total_written):
+    ''' Process chunk of data from convert_to_hdf
+
+    Parameters
+    ----------
+    chunk : _type_
+        _description_
+    upper_ds : _type_
+        _description_
+    lower_ds : _type_
+        _description_
+    logA_ds : _type_
+        _description_
+    total_written : _type_
+        _description_
+
+    Returns
+    -------
+    _type_
+        _description_
+    '''
+    data = np.array(chunk, dtype=np.float64)
+
+    upper_state = data[:, 0].astype(np.uint32)
+    lower_state = data[:, 1].astype(np.uint32)
+    log_Einstein_A = np.log10(data[:, 2] + 1e-250).astype(np.float32)
+
+    n_new = len(upper_state)
+    new_size = total_written + n_new
+
+    # Extend datasets
+    upper_ds.resize((new_size,))
+    lower_ds.resize((new_size,))
+    logA_ds.resize((new_size,))
+
+    # Write chunk
+    upper_ds[total_written:new_size] = upper_state
+    lower_ds[total_written:new_size] = lower_state
+    logA_ds[total_written:new_size] = log_Einstein_A
+
+    return new_size
 
 def convert_to_hdf(file = '', mol_ID = 0, iso_ID = 0, alkali = False, 
-                   database = ''):
+                   database = '', chunk_size = 5_000_000, compression_type = "lzf"):
     '''
-    Convert a given file to HDF5 format
+    Convert a given file to HDF5 format. 
 
     Parameters
     ----------
@@ -389,32 +432,63 @@ def convert_to_hdf(file = '', mol_ID = 0, iso_ID = 0, alkali = False,
         Whether or not the species is an alkali metal. The default is False.
     database : String, optional
         Database that the line list came from. The default is ''.
+    chunk_size : int, optional
+        The size of the chunks to be read and written into the hdf5 file. The default is 5 million.
+    compression_type : String, optional
+        The compression algorithm to be used during the writing to hdf5. The default is 'lzf', due to its speed.
 
     Returns
     -------
     None.
 
     '''
-
     
     start_time = time.time()
     
     if (database == 'ExoMol'):  # Read the .trans file downloaded from ExoMol, keep relevant data, and store data in a new HDF5 file
-    
-        trans_file = pd.read_csv(file, sep = '[\\s]{1,20}', engine = 'python', 
-                                 header=None, usecols = [0,1,2])
-        
-        upper_state = np.array(trans_file[0])
-        lower_state = np.array(trans_file[1])
-        log_Einstein_A = np.log10(np.array(trans_file[2]+1.0e-250))   
-        
+
+        with open(file, "r") as f:
+            total_lines = sum(1 for _ in f)
+
         hdf_file_path = os.path.splitext(file)[0] + '.h5'
-        
-        with h5py.File(hdf_file_path, 'w') as hdf:
-            hdf.create_dataset('Upper State', data = upper_state, dtype = 'u4') #store as 32-bit unsigned int
-            hdf.create_dataset('Lower State', data = lower_state, dtype = 'u4') #store as 32-bit unsigned int
-            hdf.create_dataset('Log Einstein A', data = log_Einstein_A, dtype = 'f4') #store as 32-bit float
-            
+
+        with h5py.File(hdf_file_path, "w") as hdf:
+
+            # Create extendable datasets
+            maxshape = (None,)
+            upper = hdf.create_dataset(
+                "Upper State", shape=(0,), maxshape=maxshape, dtype="uint32",
+                chunks=(chunk_size,), compression = compression_type)
+            lower = hdf.create_dataset(
+                "Lower State", shape=(0,), maxshape=maxshape, dtype="uint32",
+                chunks=(chunk_size,), compression = compression_type)
+            logA = hdf.create_dataset(
+                "Log Einstein A", shape=(0,), maxshape=maxshape, dtype="float32",
+                chunks=(chunk_size,), compression = compression_type)
+
+            # Read file in chunks
+            with open(file, "r") as f, tqdm(total=total_lines, unit="lines") as pbar:
+                chunk = []
+                total_written = 0
+
+                for i, line in enumerate(f, 1):
+
+                    parts=line.split()
+                    if len(parts) < 3:
+                        continue
+                    chunk.append(parts)
+
+                    # Process chunk
+                    if (i + 1) % chunk_size == 0:
+                        total_written = process_hdf_chunk(chunk, upper, lower, logA, total_written)
+                        chunk = []
+
+                    pbar.update(1) # update the progress bar for hdf conversion tracking
+
+                # leftover chunk
+                if chunk:
+                    total_written = process_hdf_chunk(chunk, upper, lower, logA, total_written)
+
         os.remove(file)
         
     elif (database in ['HITRAN', 'HITEMP']): # Read file downloaded from HITRAN/HITEMP, keep relevant data, 
