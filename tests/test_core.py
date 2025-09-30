@@ -32,7 +32,7 @@ def test_mass():
         
     assert CO_mass_hitemp == True
     
-    if core.mass('OH', '(16O-1H)', 'MoLLIST') > 16.9 and core.mass('OH', '(16O-1H)', 'MoLLIST') < 17.1:
+    if core.mass('OH', '(16O-1H)', 'MYTHOS') > 16.9 and core.mass('OH', '(16O-1H)', 'MYTHOS') < 17.1:
         OH_mass = True
     else: 
         OH_mass = False
