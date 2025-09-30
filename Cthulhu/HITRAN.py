@@ -141,7 +141,7 @@ def replace_iso_name(iso_name):
     return iso_name
     
 
-def create_pf(mol_ID, iso_ID, folder, T_min = 70, T_max = 3001, step = 1.0):
+def create_pf(mol_ID, iso_ID, folder, T_min = 70, T_max = 3500, step = 1.0):
     """
     Create partition function file using the partitionSum() function already in hapi
 
@@ -165,6 +165,11 @@ def create_pf(mol_ID, iso_ID, folder, T_min = 70, T_max = 3001, step = 1.0):
     None.
 
     """
+    # handle diff T_max for certain molecules
+    if mol_ID in {3, 10}:
+        T_max = 1000
+    elif mol_ID == 6:
+        T_max = 2500
     
     T, Q = partitionSum(mol_ID, iso_ID, [T_min, T_max], step)
 
